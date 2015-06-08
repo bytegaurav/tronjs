@@ -1,0 +1,289 @@
+<h1>Getting Started Guide</h1>
+<div class="heading">
+<h3>Installation & Setup</h3>
+</div>
+<div class="content">
+
+
+	<p>Tron is like any other JS library. Just include it in your page like you do with any other js files.  </p>
+<pre>
+	&lt;!-- Load Jquery --&gt; <br>
+	&lt;script src="/scripts/Jquery-x-x-.min.js" type="text/javascript" &gt; &lt;/script&gt;
+	<br>
+	&lt;!-- Load tron.js--&gt;<br>
+	&lt;script src="/scripts/tron.js" type="text/javascript"&gt;&lt;/script&gt;
+</pre>
+	
+	<h4>Initialise App</h4>
+	<p>Once You have included required libraries, init app with following code
+<pre>
+	&lt;script type="text/javascript" &gt; <br>
+		Tron.init(1, 2, 3, 4, 5);<br>
+	&lt;/script&gt;
+</pre>
+		<p>Arguments to init function</p>
+		<ol>
+			<li>placeholder Tag : inside which all views will be rendered</li>
+			<li>Path to app folder: this folder contains all views and viewmodels "(read more in next step) </li>
+			<li>Default Home page</li>
+			<li>Enable view caching : bool value</li>
+			<li>ID of ajax loader to show progress (optional)</li>
+		</ol>
+	</div>
+
+<div class="heading">
+	<h2>App folder structure </h2>
+</div>
+<div class="content">
+<pre>
+	/AppRoot 
+		|-Views	
+		|	|-index.html
+		|	|-about.html
+		|
+		|-ViewModels
+ 		|	|-index.js
+		|	|-about.js
+		|-route.js
+
+</pre>
+<h4>View File (.html)<h4>
+	<p>It is simple html file without head, body and html tags.</p>
+
+
+<h4>ViewModel (.js)</h4>
+<p>ViewModel should be a javacript object/class with an entry point<br>
+
+	ViewModel will have control over choice of rendering view. <br>
+	To render view, developer need to call Tron render function. 
+<br>
+<br>
+	<b>Sample (when viewmodel is being used in view)</b>
+	<code>
+<pre>
+	var index = new function(){ 
+			
+		this.init = function(){
+			Tron.render();
+		}
+	};
+	index.init();	
+</pre>
+
+	</code>
+	<br>
+
+	<br>
+	<b>Sample (when there is no reference of viewmodel in view)</b>
+<pre>
+	//simply call render function
+	Tron.render();
+</pre>
+
+</p>
+
+
+
+
+
+	</div>
+
+ 
+
+<div class="heading">
+	<h2>Routing</h2>
+</div>
+<div class="content">
+	<p>Routing configurations are defined in a js file located at app root called route.js as JSON format as follows:
+
+	</p>
+<pre>
+	[
+		{
+			"url":"users/profile/:id", 
+			"path":"userprofiles" 
+		},
+		{
+			"url":"verify/user/:email/:token",
+			"path":"auth/verify"
+		}
+	]
+</pre>
+<p>
+	<b>url</b> is the actual url that user will see in URL bar. URL parameters are prefixed by colon (:). These parameters can be accessed in ViewModel using following code:
+</p>
+<pre>
+	var param=Tron.URL["parameter Name"];
+</pre>
+
+<p>
+	<b>path</b> is the name of related View file located in views folder. 
+</p>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="heading">
+
+<h2>Templating</h2>
+	
+</div> 
+<div class="content">
+	<h4>Simple Templating</h4>
+	<p>Let us understand this with an example:</p>
+
+<b>View (.html) File</b><br>
+<pre>
+	&lt;div data-model="index"&gt;
+	&lt;h1&gt;{{heading}}&lt;/h1&gt;
+	&lt;p&gt;{{body}}&lt;/p&gt;
+	&lt;/div&gt;
+</pre>
+<p>Simply put variable in html code which is being populated by viewmodel in double curly braces</p>
+<br>
+
+<b>ViewModel (.js) File</b><br>
+<pre>
+	var index = new function(){
+		this.heading="this is heading";
+		this.body= "this is content. laoding from viewmodel";
+		
+	};
+	Tron.render(); //call render function
+
+</pre>
+
+<b>Output</b> <br>
+<pre>
+
+<h1>this is heading</h1>
+<p>this is content. laoding from viewmodel</p>
+</pre>
+
+<h4>Iterative Templating</h4>
+<p>This is similar to simple templating. Developer need to specify name of data source in "data-repeater" attribute. For Example:</p>
+
+<b>View (.html) File</b><br>
+<pre>
+	&lt;ul  data-model="index" data-repeater="cities"&gt;
+		&lt;li&gt; {{city}}&lt;/li&gt;
+	&lt;/ul&gt;
+</pre>
+
+<b>ViewModel (.js) File</b><br>
+<pre>
+	var index = new function(){
+		this.cities = [
+			{"city": "New York" },
+			{"city": "London" },
+			{"city": "Tokyo" },
+			{"city": "Bangalore" }
+				
+		];
+		
+	};
+	Tron.render(); //call render function
+
+</pre>
+
+<b>Output</b> <br>
+<pre>
+	<ul>
+		<li>New York</li>
+		<li>London</li>
+		<li>Tokyo</li>
+		<li>Bangalore</li>
+	</ul>
+</pre>
+</div>
+
+<p>
+	<b>Note:</b> incase of Arrays where there is no key, only indexes are used to identify elements. Use {{data}} as placeholder.
+	<p>
+
+
+<h4>Recursive Templating</h4>
+<p>
+	When data source JSON is tree like in tree like structure. 
+	e.g.
+</p>
+<pre>
+	var index = new function(){
+	 	this.data= [
+	 		{
+	 			"name"  : "John",
+	 			"marks" : [
+ 								"100", 
+ 								"90",
+ 								"80"
+
+	 					  ]
+ 	 		},
+ 	 		{
+	 			"name"  : "Doe",
+	 			"marks" : [
+ 								"90",
+ 								"80",
+ 								"50"
+
+	 					  ]	
+ 	 		}
+	 	];
+
+	}
+</pre>
+<p>In above example, marks is a iteratable array inside another iteratable array data. </p>
+
+<p>
+	Such JSONs can be templated as follows in HTML
+
+</p>
+
+
+
+<b>View (.html) File</b><br>
+<pre>
+	&lt;ul  data-model="index" data-repeater="data"&gt;
+		&lt;li&gt; {{name}}
+			&lt;ul  data-model="index" data-repeater="data.marks"&gt;
+				&lt;li&gt; {{data}}	  &lt;/li&gt;	
+			&lt;/ul&gt;
+
+		&lt;/li&gt;
+	&lt;/ul&gt;
+</pre>
+
+
+<b>Output</b><br>
+<code>
+	
+	<ul>
+	<li>
+	John
+	<ul>
+	<li>100</li>
+	<li>90</li>
+				<li>80</li>
+				
+			</ul>
+		</li>
+			<li>
+			Doe
+			<ul>
+			<li>90</li>
+				<li>80</li>
+				<li>50</li>
+			</ul>
+		</li>
+	</ul>
+</code>
+
+

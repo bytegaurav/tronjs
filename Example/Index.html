@@ -1,0 +1,34 @@
+<html>
+<head>
+	<title>Minimalistic Example</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="Assets/styles/main.css"/>
+
+</head>
+<body>
+	<header>
+	<h1>Hello World with Tron.js</h1>
+	<nav>
+				<ul>
+						<li><a href="#">Home</a></li>
+							<li><a href="#features/Application Features">Framework Highlights</a></li>
+							<li><a href="#gettingStarted">Getting started Guide</a></li>
+				</ul>
+
+		</nav>
+</header>
+	<article>
+
+	<div data-item="placeholder">
+	<div>		
+		</article>
+
+	<script type="text/javascript" src="Assets/scripts/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="Assets/scripts/tron.js"></script>
+	<script type="text/javascript">
+		//initialise Tron app
+		// API signature : Tron.initialise(placeholdertag, path to app folder, default landing page, view caching, id of loader)
+		   Tron.initialise('div', 'App', 'index', false, 'loader');
+	</script>
+</body>
+</html>

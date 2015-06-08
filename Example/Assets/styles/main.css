@@ -1,0 +1,64 @@
+html, body{
+	margin:0;
+	padding:0;
+	font-family: 'Open Sans';
+	font-weight: 100;
+}
+
+h1, h2, h3, h4, h5, h6{
+	font-weight: 100;
+}
+
+header,article, footer{
+width:1000px;
+margin:0 auto;
+
+}
+
+header{
+	height: 100px;
+}
+
+header h1{
+
+}
+nav ul{
+	margin:0;
+	padding:0;
+	border: 1px solid #000;
+	padding: 10px;
+}
+nav li{
+	display: inline-block;
+
+}
+nav li a{
+	padding:10px;
+	text-decoration: none;
+
+
+}
+#homeimage
+{
+	width: 500px;
+	margin:0 auto;
+}
+
+pre, code{
+	background: #eee;
+	padding:10px;
+	border:1px solid #ccc;
+	 font-family: monospace;
+	 display: block
+}
+.heading{
+
+}
+.content{
+	padding-left: 10px;
+	display: block;
+	
+}
+.content h4{
+	font-weight: 400;
+}
